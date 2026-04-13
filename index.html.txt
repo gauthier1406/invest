@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestEdu - Apprendre à Investir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .bg-gradient-main { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <header class="bg-gradient-main p-6 text-white rounded-b-3xl shadow-lg">
+        <h1 class="text-2xl font-bold">InvestEdu 🚀</h1>
+        <p class="text-sm opacity-90">Apprends à faire fructifier tes 50€/mois</p>
+    </header>
+
+    <main class="p-5" id="app-content">
+        <div id="dashboard">
+            <h2 class="text-lg font-semibold mb-4">Choisis un domaine :</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <button onclick="showModule('bourse')" class="card-shadow bg-white p-5 rounded-2xl flex items-center justify-between border-l-4 border-blue-500">
+                    <div class="text-left">
+                        <span class="text-3xl">📈</span>
+                        <h3 class="font-bold text-lg">La Bourse</h3>
+                        <p class="text-xs text-gray-500">ETF, Actions, Dividendes</p>
+                    </div>
+                    <span class="text-blue-500 font-bold">→</span>
+                </button>
+
+                <button onclick="showModule('crypto')" class="card-shadow bg-white p-5 rounded-2xl flex items-center justify-between border-l-4 border-orange-400 opacity-60">
+                    <div class="text-left">
+                        <span class="text-3xl">₿</span>
+                        <h3 class="font-bold text-lg">Crypto (Arrive bientôt)</h3>
+                        <p class="text-xs text-gray-500">Bitcoin, Ethereum, Sécurité</p>
+                    </div>
+                </button>
+            </div>
+
+            <div class="mt-8 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                <p class="text-sm text-blue-700 font-medium">💡 "Le meilleur moment pour investir était il y a 20 ans. Le deuxième meilleur moment, c'est aujourd'hui."</p>
+            </div>
+        </div>
+
+        <div id="module-viewer" class="hidden">
+            <button onclick="goBack()" class="mb-4 text-sm text-gray-500 font-bold">← Retour</button>
+            <div id="module-body"></div>
+        </div>
+    </main>
+
+    <script>
+        const content = {
+            bourse: {
+                title: "Investir en Bourse",
+                steps: [
+                    {
+                        q: "Pourquoi investir ?",
+                        a: "Avec l'inflation, laisser 100€ sous ton matelas te fait perdre de l'argent. En bourse, historiquement, le marché rapporte environ 7-8% par an en moyenne sur le long terme."
+                    },
+                    {
+                        q: "Le risque de tout perdre ?",
+                        a: "Si tu achètes une seule action, oui. Mais si tu achètes un **ETF World** (un panier de 1500 entreprises), il faudrait que les 1500 plus grosses boîtes du monde fassent faillite en même temps. Impossible !"
+                    },
+                    {
+                        q: "Où acheter ?",
+                        a: "Pour un Français, le **PEA (Plan Épargne Actions)** est le meilleur choix pour payer moins d'impôts. Regarde du côté de Boursorama ou Fortuneo pour des frais réduits."
+                    }
+                ]
+            }
+        };
+
+        function showModule(key) {
+            const data = content[key];
+            if(!data) return;
+
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('module-viewer').classList.remove('hidden');
+
+            let html = `<h2 class="text-2xl font-bold mb-6">${data.title}</h2>`;
+            
+            data.steps.forEach(step => {
+                html += `
+                    <div class="bg-white p-5 rounded-2xl mb-4 card-shadow border border-gray-100">
+                        <h4 class="font-bold text-blue-600 mb-2">${step.q}</h4>
+                        <p class="text-gray-700 leading-relaxed">${step.a}</p>
+                    </div>
+                `;
+            });
+
+            document.getElementById('module-body').innerHTML = html;
+        }
+
+        function goBack() {
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('module-viewer').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
